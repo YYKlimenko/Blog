@@ -1,0 +1,73 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Блог — {{post.title}}</title>
+</head>
+<body>
+<p>{{post.title}}</p>
+<p>Дата публикации: {{post.date_pub}}</p>
+<p>Категория: <a href="{% url 'category' post.category.slug %}"> {{post.category}}</a></p>
+<p>Тэги: {% for tag in post.tags.all %}<a href="{% url 'tag' tag.slug %}"> #{{ tag }}</a> {% endfor %}</p>
+{% if post.image %}
+<img src="{{ post.image.url }}"> </img>
+{% endif %}
+<p>{{post.preview_text|linebreaks}}</p>
+<p>{{post.text|linebreaks}}</p>
+<p>Автор: {{post.author.first_name}} {{post.author.last_name}}</p>
+<hr>
+<p>Комментарии:</p>{% for comment in post.comments.all %}
+{% if not comment.parent_id %}
+
+    {% if comment.author.first_name %}
+    <p>Автор: {{comment.author.first_name}} {{comment.author.last_name}}</p>
+    {% else %}
+    <p>Автор: Гость</p>
+    {% endif %}
+    <p>{{ comment.date_pub }}</p>
+    <p>{{ comment.text }}</p>
+
+        {% for child_comment in comment.children.all %}
+        {% if child_comment.author.first_name %}
+
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;Автор: {{child_comment.author.first_name}} {{child_comment.author.last_name}}</p>
+        {% else %}
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;Автор: Гость</p>
+        {% endif %}
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;{{ child_comment.date_pub }}</p>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;{{ child_comment.text }}</p>
+        {% endfor %}
+        <p>Добавить комментарий:</p>
+        <form action="" id="add_comment"  method="post">
+        {{ form.text }}
+        <div> {{ form.text.errors }} </div>
+        {% csrf_token %}
+
+        <p> <button type="submit" name="parent" value="{{comment.pk}}">Добавить</button> </p>
+
+        </form>
+
+
+
+
+{% endif %}
+{% endfor %}
+    <hr>
+
+
+<p>Добавить комментарий:</p>
+<form action="" id="add_comment" method="post">
+    {{ form.text }}
+    <div> {{ form.text.errors }} </div>
+    {% csrf_token %}
+
+<p> <button type="submit" name="parent" value="None">Добавить</button> </p>
+
+</form>
+
+
+
+</ul>
+</body>
+</html>
