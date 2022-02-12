@@ -9,8 +9,14 @@
 <p> Регистрация:  </p>
 <hr>
 <form method="post">
-    {{ form.as_p }}
-    {% csrf_token %}
+        {{form.as_p}}
+       <!--<p>Логин: {{ form.username }}</p>-->
+       <!--<p>Пароль: {{ form.password1 }}</p>-->
+       <!--<p>Повторите пароль: {{ form.password2 }}</p>-->
+       <!--<p>{{ form.error }}</p>-->
+
+
+        {% csrf_token %}
     <p> <button type="submit">Зарегистрироваться</button> </p>
 </form>
 

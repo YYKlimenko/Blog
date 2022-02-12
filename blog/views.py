@@ -3,12 +3,12 @@ from django.http import HttpResponseNotFound, HttpResponse, HttpRequest
 from django.views.generic import ListView, DetailView, CreateView
 from django.views.generic.edit import FormMixin
 from django.contrib.auth import logout, login
-from django.contrib.auth.models import User
 from django.contrib.auth.forms import  UserCreationForm, AuthenticationForm
 from django.contrib.auth.views import  LoginView
-from django.urls import reverse_lazy
-from blog.models import Post, Tag
-from blog.forms import AddCommentForm
+from django.urls import reverse_lazy, reverse
+from blog.models import Post, Tag, Comment, User
+from blog.forms import AddCommentForm, RegisterUserForm
+
 
 
 # Create your views here.
@@ -29,15 +29,34 @@ class ShowPost(FormMixin, DetailView):
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
         form = self.get_form()
-        if form.is_valid():
-            form = form.save(commit = False)
-            if request.user.is_authenticated:
-                form.author_id = self.request.user.id
-            form.post_id = self.object.pk
-            if request.POST['parent'] != 'None':
-                form.parent_id = request.POST['parent']
-            form.save()
-            return super().form_valid(form)
+        like = request.POST.get('like', None)
+        if like:
+            if like == 'post':
+                if Post.likes.through.objects.filter(user_id=request.user.id):
+                    print('Лайк есть!')
+                    Post.objects.get(pk=self.object.pk).likes.remove(self.request.user.id)
+                else:
+                     print('Лайка нет!')
+                     Post.objects.get(pk=self.object.pk).likes.add(self.request.user.id)
+                return super().form_valid(form)
+            else:
+                if Comment.likes.through.objects.filter(user_id=request.user.id, comment_id=like):
+                    print('Лайк есть!')
+                    Comment.objects.get(pk=like).likes.remove(self.request.user.id)
+                else:
+                     print('Лайка нет!')
+                     Comment.objects.get(pk=like).likes.add(self.request.user.id)
+                return super().form_valid(form)
+        else:
+            if form.is_valid():
+                form = form.save(commit = False)
+                if request.user.is_authenticated:
+                    form.author_id = self.request.user.id
+                form.post_id = self.object.pk
+                if request.POST['parent'] != 'None':
+                    form.parent_id = request.POST['parent']
+                form.save()
+                return super().form_valid(form)
 
 
 class PostView(ListView):
@@ -73,7 +92,7 @@ class Post_Tag_View(ListView):
 
 class RegisterUser(CreateView):
     model = User
-    form_class = UserCreationForm
+    form_class = RegisterUserForm
     template_name = 'blog/register.html'
     success_url = 'login'
 

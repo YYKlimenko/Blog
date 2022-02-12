@@ -1,5 +1,5 @@
 from django.urls import path
-from blog.views import PostView, ShowPost, Post_Cat_View, Post_Tag_View, RegisterUser, LoginUser, logout_user
+from blog.views import PostView, ShowPost, Post_Cat_View, Post_Tag_View,  LoginUser, logout_user, RegisterUser
 
 
 

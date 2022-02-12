@@ -11,7 +11,7 @@
 <p>Категория: <a href="{% url 'category' post.category.slug %}"> {{post.category}}</a></p>
 <p>Тэги: {% for tag in post.tags.all %}<a href="{% url 'tag' tag.slug %}"> #{{ tag }}</a> {% endfor %}</p>
 {% if post.image %}
-<img src="{{ post.image.url }}"> </img>
+<img width="400" height="300" src="{{ post.image.url }}"> </img>
 {% endif %}
 <p>{{post.preview_text|linebreaks}}</p>
 <p>{{post.text|linebreaks}}</p>
@@ -25,21 +25,39 @@
     {% else %}
     <p>Автор: Гость</p>
     {% endif %}
+    <img width="100" height="100" src="{{comment.author.avatar.url}}"></img>
+
     <p>{{ comment.date_pub }}</p>
     <p>{{ comment.text }}</p>
+    <h4>Лайки: {{comment.likes.count}}</h4>
+    <form action="{{post.get_absolute_url}}"  method="post">
+    {% csrf_token %}
+    <p> <button type="submit" name="like" value="{{comment.id}}">Лайк/Дизлайк</button> </p>
+    </form>
 
         {% for child_comment in comment.children.all %}
         {% if child_comment.author.first_name %}
+        <h4>Лайки: {{comment.likes.count}}</h4>
+
 
         <p>&nbsp;&nbsp;&nbsp;&nbsp;Автор: {{child_comment.author.first_name}} {{child_comment.author.last_name}}</p>
         {% else %}
         <p>&nbsp;&nbsp;&nbsp;&nbsp;Автор: Гость</p>
         {% endif %}
+
+        <img width="100" height="100" src="{{child_comment.author.avatar.url}}"></img>
+
         <p>&nbsp;&nbsp;&nbsp;&nbsp;{{ child_comment.date_pub }}</p>
         <p>&nbsp;&nbsp;&nbsp;&nbsp;{{ child_comment.text }}</p>
+        <h4>&nbsp;&nbsp;&nbsp;&nbsp;Лайки: {{child_comment.likes.count}}</h4>
+        <form action="{{post.get_absolute_url}}"  method="post">
+        {% csrf_token %}
+        <p> <button type="submit" name="like" value="{{child_comment.id}}">Лайк/Дизлайк</button> </p>
+        </form>
         {% endfor %}
+
         <p>Добавить комментарий:</p>
-        <form action="" id="add_comment"  method="post">
+        <form action="" method="post">
         {{ form.text }}
         <div> {{ form.text.errors }} </div>
         {% csrf_token %}
@@ -63,8 +81,16 @@
     {% csrf_token %}
 
 <p> <button type="submit" name="parent" value="None">Добавить</button> </p>
-
+    <hr>
+<h4>Лайки: {{post.likes.count}}</h4>
 </form>
+<form action="{{post.get_absolute_url}}"  method="post">
+     {% csrf_token %}
+<p> <button type="submit" name="like" value="post">Лайк/Дизлайк</button> </p>
+</form>
+
+
+
 
 
 
