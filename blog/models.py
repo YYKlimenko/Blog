@@ -64,9 +64,7 @@ class Post(models.Model):
     image = models.ImageField(upload_to='images/%Y/%m/%d/', null=True, blank=True, verbose_name='Изображение')
     category = models.ForeignKey(
         'Category',
-        on_delete=models.SET_NULL,
-        null = True,
-        blank = True,
+        on_delete=models.CASCADE,
         verbose_name='Категория',
     )
     tags = models.ManyToManyField('Tag', blank = True, related_name='posts', verbose_name = 'Теги',)
@@ -74,6 +72,7 @@ class Post(models.Model):
     text = models.TextField(max_length = 5000, verbose_name='Текст')
     date_pub = models.DateTimeField(auto_now_add=True, verbose_name='Дата публикации')
     likes = models.ManyToManyField(User, blank = True, related_name='posts', verbose_name = 'Лайки')
+    is_published = models.BooleanField("Опубликовано", null=True, blank=True)
 
 
     def __str__(self):
