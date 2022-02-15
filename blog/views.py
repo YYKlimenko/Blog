@@ -15,7 +15,6 @@ from blog.forms import AddCommentForm, RegisterUserForm
 
 # Create your views here.
 
-
 class ShowPost(FormMixin, DetailView):
     model = Post
     template_name = 'blog/post_detail.html'
@@ -27,15 +26,19 @@ class ShowPost(FormMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        defer_list = ['author__date_joined', 'author__is_active',
+                    'author__is_staff', 'author__is_superuser',
+                    'author__password', 'author__username', 'author__email',
+                    'author__last_login']
         comments = Comment.objects.filter(parent__isnull = True).\
             filter(post_id = self.object.pk).\
             annotate(likes_count=Count('likes')).\
             select_related('author').\
-            prefetch_related(Prefetch('children', Comment.objects.annotate(likes_count=Count('likes')))).\
-            order_by('-date_pub')
+            prefetch_related(Prefetch('children', Comment.objects.annotate(likes_count=Count('likes')).select_related('author').
+                    defer(*defer_list))).\
+            order_by('-date_pub').\
+            defer(*defer_list)
         context['comments'] = comments
-
-
         return context
 
     # Метод get_object переопределен — в стандартный запрос добавлены select_related модели
@@ -79,9 +82,6 @@ class ShowPost(FormMixin, DetailView):
         return obj
 
 
-
-
-
     def get_success_url(self):
         return reverse_lazy('post', kwargs = {'category_slug':self.object.category.slug, 'post_slug':self.object.slug})
 
@@ -117,7 +117,6 @@ class ShowPost(FormMixin, DetailView):
                 form.save()
                 return super().form_valid(form)
 
-
 class PostView(ListView):
     model = Post
     context_object_name = 'posts'
@@ -129,11 +128,11 @@ class PostView(ListView):
             annotate(comments_count=Count('comments')).\
             select_related('category', 'author').\
             prefetch_related('tags').\
-            order_by('-date_pub')
-
-
-
-
+            order_by('-date_pub').\
+            defer('text', 'is_published', 'author__avatar', 'author__date_joined',
+                  'author__is_active', 'author__is_staff', 'author__is_superuser',
+                  'author__password', 'author__username', 'author__email',
+                  'author__last_login', 'image')
 
 class Post_Cat_View(ListView):
     model = Post

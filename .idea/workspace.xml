@@ -23,44 +23,30 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/blog/templates/blog/index.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="34" column="0" selection-start="949" selection-end="949" vertical-scroll-proportion="-18.307692" vertical-offset="102" max-vertical-offset="901">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="models.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/blog/models.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="36" column="0" selection-start="1049" selection-end="1049" vertical-scroll-proportion="0.0" vertical-offset="714" max-vertical-offset="1547">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="views.py" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="views.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/blog/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="23" selection-start="435" selection-end="435" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1122">
+            <state line="72" column="72" selection-start="3059" selection-end="3059" vertical-scroll-proportion="1.1180439" vertical-offset="561" max-vertical-offset="3196">
               <folding>
-                <element signature="e#681#4707#0" expanded="false" />
-                <element signature="e#1577#3057#0" expanded="false" />
-                <element signature="e#5487#5763#0" expanded="false" />
-                <element signature="e#5801#6041#0" expanded="false" />
-                <element signature="e#6075#6239#0" expanded="false" />
-                <element signature="e#6285#6335#0" expanded="false" />
+                <element signature="e#0#37#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="query.py" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="query.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/django/db/models/query.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="34" column="19" selection-start="1168" selection-end="1168" vertical-scroll-proportion="-40.47892" vertical-offset="24225" max-vertical-offset="34493">
+            <state line="1972" column="34" selection-start="81957" selection-end="81957" vertical-scroll-proportion="0.0" vertical-offset="32778" max-vertical-offset="34493">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="post_detail.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/blog/templates/blog/post_detail.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="39" column="48" selection-start="1244" selection-end="1244" vertical-scroll-proportion="-25.5" vertical-offset="0" max-vertical-offset="1598">
               <folding />
             </state>
           </provider>
@@ -90,8 +76,8 @@
         <option value="$PROJECT_DIR$/blog/models.py" />
         <option value="$PROJECT_DIR$/project1/urls.py" />
         <option value="$PROJECT_DIR$/blog/templates/blog/post_detail.html" />
-        <option value="$PROJECT_DIR$/blog/views.py" />
         <option value="$PROJECT_DIR$/blog/templates/blog/index.html" />
+        <option value="$PROJECT_DIR$/blog/views.py" />
       </list>
     </option>
   </component>
@@ -534,13 +520,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/blog/templates/blog/post_detail.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="0" selection-start="1302" selection-end="1302" vertical-scroll-proportion="-17.653847" vertical-offset="255" max-vertical-offset="1598">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/blog/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="36" column="0" selection-start="1049" selection-end="1049" vertical-scroll-proportion="0.0" vertical-offset="612" max-vertical-offset="1547">
@@ -550,29 +529,31 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/blog/templates/blog/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="0" selection-start="949" selection-end="949" vertical-scroll-proportion="-18.307692" vertical-offset="102" max-vertical-offset="901">
+        <state line="19" column="27" selection-start="353" selection-end="353" vertical-scroll-proportion="0.5696649" vertical-offset="0" max-vertical-offset="901">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/blog/templates/blog/post_detail.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="39" column="48" selection-start="1244" selection-end="1244" vertical-scroll-proportion="-25.5" vertical-offset="0" max-vertical-offset="1598">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/django/db/models/query.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1972" column="34" selection-start="81957" selection-end="81957" vertical-scroll-proportion="0.0" vertical-offset="32778" max-vertical-offset="34493">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/blog/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="23" selection-start="435" selection-end="435" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1122">
+        <state line="72" column="72" selection-start="3059" selection-end="3059" vertical-scroll-proportion="1.1180439" vertical-offset="561" max-vertical-offset="3196">
           <folding>
-            <element signature="e#681#4707#0" expanded="false" />
-            <element signature="e#1577#3057#0" expanded="false" />
-            <element signature="e#5487#5763#0" expanded="false" />
-            <element signature="e#5801#6041#0" expanded="false" />
-            <element signature="e#6075#6239#0" expanded="false" />
-            <element signature="e#6285#6335#0" expanded="false" />
+            <element signature="e#0#37#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/django/db/models/query.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="19" selection-start="1168" selection-end="1168" vertical-scroll-proportion="-40.47892" vertical-offset="24225" max-vertical-offset="34493">
-          <folding />
         </state>
       </provider>
     </entry>
