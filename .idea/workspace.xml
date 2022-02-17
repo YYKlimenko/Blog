@@ -26,19 +26,31 @@
       <file leaf-file-name="views.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/blog/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="72" column="72" selection-start="3059" selection-end="3059" vertical-scroll-proportion="1.1180439" vertical-offset="561" max-vertical-offset="3196">
+            <state line="132" column="70" selection-start="6701" selection-end="6701" vertical-scroll-proportion="0.5463744" vertical-offset="118" max-vertical-offset="765">
               <folding>
                 <element signature="e#0#37#0" expanded="true" />
+                <element signature="e#652#3879#0" expanded="false" />
+                <element signature="e#3924#4028#0" expanded="false" />
+                <element signature="e#4077#4824#0" expanded="false" />
+                <element signature="e#4877#5732#0" expanded="false" />
+                <element signature="e#5777#6701#0" expanded="false" />
+                <element signature="e#5809#6701#0" expanded="false" />
+                <element signature="e#6740#6980#0" expanded="false" />
+                <element signature="e#7015#7179#0" expanded="false" />
+                <element signature="e#7226#7276#0" expanded="false" />
+                <element signature="e#7309#7353#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="query.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/django/db/models/query.py">
+      <file leaf-file-name="urls.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/blog/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="1972" column="34" selection-start="81957" selection-end="81957" vertical-scroll-proportion="0.0" vertical-offset="32778" max-vertical-offset="34493">
-              <folding />
+            <state line="17" column="0" selection-start="639" selection-end="639" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="408">
+              <folding>
+                <element signature="e#0#28#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -71,12 +83,12 @@
         <option value="$PROJECT_DIR$/blog/templates/blog/register.html" />
         <option value="$PROJECT_DIR$/blog/admin.py" />
         <option value="$PROJECT_DIR$/blog/forms.py" />
-        <option value="$PROJECT_DIR$/blog/urls.py" />
         <option value="$PROJECT_DIR$/project1/settings.py" />
         <option value="$PROJECT_DIR$/blog/models.py" />
         <option value="$PROJECT_DIR$/project1/urls.py" />
         <option value="$PROJECT_DIR$/blog/templates/blog/post_detail.html" />
         <option value="$PROJECT_DIR$/blog/templates/blog/index.html" />
+        <option value="$PROJECT_DIR$/blog/urls.py" />
         <option value="$PROJECT_DIR$/blog/views.py" />
       </list>
     </option>
@@ -152,46 +164,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="project1" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="blog" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="project1" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="project1" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="blog" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templatetags" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="project1" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="project1" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="blog" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -475,13 +447,6 @@
         <state line="54" column="42" selection-start="1586" selection-end="1586" vertical-scroll-proportion="0.0" vertical-offset="525" max-vertical-offset="2414" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/blog/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="0" selection-start="625" selection-end="625" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="391">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/project1/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="30" column="0" selection-start="911" selection-end="911" vertical-scroll-proportion="0.60746" vertical-offset="100" max-vertical-offset="731">
@@ -548,11 +513,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/blog/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="0" selection-start="639" selection-end="639" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="408">
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/blog/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="72" column="72" selection-start="3059" selection-end="3059" vertical-scroll-proportion="1.1180439" vertical-offset="561" max-vertical-offset="3196">
+        <state line="132" column="70" selection-start="6701" selection-end="6701" vertical-scroll-proportion="0.5463744" vertical-offset="118" max-vertical-offset="765">
           <folding>
             <element signature="e#0#37#0" expanded="true" />
+            <element signature="e#652#3879#0" expanded="false" />
+            <element signature="e#3924#4028#0" expanded="false" />
+            <element signature="e#4077#4824#0" expanded="false" />
+            <element signature="e#4877#5732#0" expanded="false" />
+            <element signature="e#5777#6701#0" expanded="false" />
+            <element signature="e#5809#6701#0" expanded="false" />
+            <element signature="e#6740#6980#0" expanded="false" />
+            <element signature="e#7015#7179#0" expanded="false" />
+            <element signature="e#7226#7276#0" expanded="false" />
+            <element signature="e#7309#7353#0" expanded="false" />
           </folding>
         </state>
       </provider>
