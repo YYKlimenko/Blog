@@ -1,15 +1,11 @@
 # from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
-from django.contrib.auth.models import AbstractUser
-from project1 import settings
-from mptt.models import MPTTModel, TreeForeignKey
-from mptt import register
+from user.models import User
 
-
-class User(AbstractUser):
-    avatar = models.ImageField(upload_to='images/avatar/%Y/%m/%d/', blank=True, verbose_name='Аватар', default='images/avatar/default.bmp')
-    email = models.EmailField('E-mail', unique=True)
+# class User(AbstractUser):
+#     avatar = models.ImageField(upload_to='images/avatar/%Y/%m/%d/', blank=True, verbose_name='Аватар', default='images/avatar/default.bmp')
+#     email = models.EmailField('E-mail', unique=True)
 
 
 

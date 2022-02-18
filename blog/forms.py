@@ -1,7 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
-from .models import Comment, User
-
+from .models import Comment
 
 
 class AddCommentForm(forms.ModelForm):
@@ -11,8 +9,5 @@ class AddCommentForm(forms.ModelForm):
         widgets={
             'text': forms.Textarea(attrs={'cols': 60, 'rows': 10}),
                 }
-class RegisterUserForm(UserCreationForm):
-    class Meta:
-        model = User
-        fields = ['username', 'password1', 'password2', 'first_name', 'last_name', 'email']
+
 

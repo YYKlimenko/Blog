@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'blog.apps.BlogConfig',
+    'user.apps.UserConfig',
 
     'debug_toolbar'
 ]
@@ -86,7 +87,7 @@ DATABASES = {
     }
 }
 ##Определяем модель пользователя
-AUTH_USER_MODEL = 'blog.User'
+AUTH_USER_MODEL = 'user.User'
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
