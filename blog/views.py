@@ -147,7 +147,7 @@ class PostTagListView(PostListView):
 
 
 class SearchPostListView(PostListData, ListView):
-    
+
     def get_queryset(self):
         return Post.objects.filter(
                                    Q(is_published = True
