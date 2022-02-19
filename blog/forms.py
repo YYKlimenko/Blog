@@ -11,3 +11,7 @@ class AddCommentForm(forms.ModelForm):
                 }
 
 
+class SearchForm(forms.Form):
+    text = forms.CharField(max_length=50)
+
+

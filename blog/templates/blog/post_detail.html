@@ -9,8 +9,8 @@
 
 <p>{{post.title}}</p>
 <p>Дата публикации: {{post.date_pub}}</p>
-<p>Категория: <a href="{% url 'category' post.category.slug %}"> {{post.category}}</a></p>
-<p>Тэги: {% for tag in post.tags.all %}<a href="{% url 'tag' tag.slug %}"> #{{ tag }}</a> {% endfor %}</p>
+<p>Категория: <a href="{% url 'blog:category' post.category.slug %}"> {{post.category}}</a></p>
+<p>Тэги: {% for tag in post.tags.all %}<a href="{% url 'blog:tag' tag.slug %}"> #{{ tag }}</a> {% endfor %}</p>
 {% if post.image %}
 <img width="400" height="300" src="{{ post.image.url }}"> </img>
 {% endif %}

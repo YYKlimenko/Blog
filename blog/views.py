@@ -1,11 +1,11 @@
 from django.http import HttpResponseNotFound, Http404
 from django.urls import reverse_lazy
-from django.db.models import Count
+from django.db.models import Count, Q
 from django.db.models.query import Prefetch
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import FormMixin
 from blog.models import Post, Tag, Comment
-from blog.forms import AddCommentForm
+from blog.forms import AddCommentForm, SearchForm
 
 
 def control_empty(get_queryset):
@@ -55,7 +55,7 @@ class ShowPost(FormMixin, DetailView):
     def get_success_url(self):
         return reverse_lazy('post', kwargs = {'category_slug':self.object.category.slug, 'post_slug':self.object.slug})
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request):
         self.object = self.get_object()
         form = self.get_form()
         like = request.POST.get('like', None)
@@ -84,15 +84,18 @@ class ShowPost(FormMixin, DetailView):
                 return super().form_valid(form)
 
 
-class PostListData:
+class PostListData(FormMixin):
     model = Post
     context_object_name = 'posts'
     template_name = 'blog/index.html'
     paginate_by = 5
+    form_class = SearchForm
+
+    def get_success_url(self):
+         return reverse_lazy('searcher:find')
 
 
 class PostListView(PostListData, ListView):
-
 
     @control_empty
     def get_queryset(self):
@@ -141,6 +144,27 @@ class PostTagListView(PostListView):
                                         'author__is_active', 'author__is_staff', 'author__is_superuser',
                                         'author__password', 'author__username', 'author__email',
                                         'author__last_login', 'image')
+
+
+class SearchPostListView(PostListData, ListView):
+    
+    def get_queryset(self):
+        return Post.objects.filter(
+                                   Q(is_published = True
+                                   )&Q(title__icontains=self.search)|
+                                   Q(preview_text__icontains=self.search)|
+                                   Q(text__icontains=self.search)
+                                   ).prefetch_related('tags'
+                                   ).select_related('category', 'author'
+                                   ).order_by('-date_pub'
+                                   ).defer('text', 'is_published', 'author__avatar', 'author__date_joined',
+                                           'author__is_active', 'author__is_staff', 'author__is_superuser',
+                                           'author__password', 'author__username', 'author__email',
+                                           'author__last_login', 'image'
+                                   ).annotate(comments_count=Count('comments'))
+    def post(self, request):
+        self.search = request.POST.get('text', None)
+        return self.get(self, request)
 
 
 def page_not_found(request, exception):
