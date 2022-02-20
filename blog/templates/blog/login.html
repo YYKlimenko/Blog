@@ -8,7 +8,7 @@
 <body>
 <p> Войти:  </p>
 <hr>
-<form method="post" action="{% url 'blog:index' %}">
+<form method="post">
     {{ form.as_p }}
     {% csrf_token %}
     <p> <button type="submit">Войти</button> </p>

@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content=" {% block metacontent %} {% endblock metacontent %}">
+    <meta name="author" content="Yuri Klimenko">
+    <meta name="robots" content="index">
+
+    <title> {% block title %} {% endblock title %}  </title>
+    <link href="{% static 'blog/css/styles.css' %}" rel="stylesheet">
+
+</head>
+<body>
+    <div id="page">
+        <div id ='header'>
+            <form method="post" action="{% url 'blog:search' %}">
+                {{ form.text }}
+                {% csrf_token %}
+                <button type="submit">Поиск</button>
+            </form>
+            {% if request.user.is_authenticated %}
+            {{ user.username }} <a href="{% url 'logout' %}">Выйти</a>
+            {% else %}
+            <a href="{% url 'login' %}"> Войти </a><a href="{% url 'register' %}"> Регистрация </a>
+            {% endif %}
+        </div>
+        <div id="sidebar">
+            <ul>
+                <li>Категории</li>
+                 <li>Теги</li>
+                 <li>Архив</li>
+            </ul>
+        </div>
+        <div id="content"> {% block content %} {% endblock %}
+        </div>
+
+
+
+
+
+    </div>
+
+</body>
+</html>

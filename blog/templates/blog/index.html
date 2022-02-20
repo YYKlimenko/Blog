@@ -1,24 +1,9 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Блог — Главная страница</title>
-</head>
-<body>
+{% extends 'blog/base.html' %}
+
+{% block title %} Блог — Главная страница {% endblock %}
 
 
-<form method="post" action="{% url 'blog:search' %}">
-    {{ form.text }}
-    {% csrf_token %}
-   <button type="submit">Поиск</button>
-</form>
-
-{% if request.user.is_authenticated %}
-<p> {{ user.username }} <a href="{% url 'logout' %}">Выйти</a> </p>
-{% else %}
-<p> <a href="{% url 'login' %}"> Войти </a><a href="{% url 'register' %}"> Регистрация </a></p>
-{% endif %}
-
-
+{% block content %}
 <ul>
     {% for post in posts %}
     <li>
@@ -47,5 +32,4 @@
     {% endfor %}
 
 </ul>
-</body>
-</html>
+{% endblock %}

@@ -23,7 +23,7 @@ class RegisterUser(CreateView):
 class LoginUser(LoginView):
     form_class = AuthenticationForm
     template_name = 'blog/login.html'
-    success_url = 'blog:index'
+
 
     def get_success_url(self):
         return reverse_lazy('blog:index')
@@ -31,4 +31,4 @@ class LoginUser(LoginView):
 
 def logout_user(request):
     logout(request)
-    return redirect('index')
+    return redirect('blog:index')
