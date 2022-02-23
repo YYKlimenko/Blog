@@ -12,33 +12,33 @@
 
 </head>
 <body>
-    <div id="page">
-        <div id ='header'>
-            <form method="post" action="{% url 'blog:search' %}">
-                {{ form.text }}
-                {% csrf_token %}
-                <button type="submit">Поиск</button>
-            </form>
+    <div class="page">
+        <div class="header">
+            <div class="login_info">
             {% if request.user.is_authenticated %}
-            {{ user.username }} <a href="{% url 'logout' %}">Выйти</a>
+            Добро пожаловать, {{ user.username }}<a href="{% url 'logout' %}">   Выйти</a>
             {% else %}
             <a href="{% url 'login' %}"> Войти </a><a href="{% url 'register' %}"> Регистрация </a>
             {% endif %}
+            </div>
+            <div class="search-form">
+                <form method="post" action="{% url 'blog:search' %}">
+                {{ form.text }}
+                {% csrf_token %}
+                <button type="submit">Поиск</button>
+                </form>
+            </div>
+
         </div>
-        <div id="sidebar">
-            <ul>
-                <li>Категории</li>
-                 <li>Теги</li>
-                 <li>Архив</li>
-            </ul>
-        </div>
-        <div id="content"> {% block content %} {% endblock %}
-        </div>
-
-
-
-
-
+        <div class="body_page">
+            <div class="sidebar">
+                <ul>
+                    <li>Категории</li>
+                     <li>Теги</li>
+                     <li>Архив</li>
+                </ul>
+            </div>
+            <div class="cont">{% block content %} {% endblock %}</div>
     </div>
 
 </body>

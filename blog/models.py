@@ -64,7 +64,7 @@ class Post(models.Model):
         verbose_name='Категория',
     )
     tags = models.ManyToManyField('Tag', blank = True, related_name='posts', verbose_name = 'Теги',)
-    preview_text = models.TextField(max_length = 200, verbose_name='Превью')
+    preview_text = models.TextField(max_length = 500, verbose_name='Превью')
     text = models.TextField(max_length = 5000, verbose_name='Текст')
     date_pub = models.DateTimeField(auto_now_add=True, verbose_name='Дата публикации')
     likes = models.ManyToManyField(User, blank = True, related_name='posts', verbose_name = 'Лайки')
