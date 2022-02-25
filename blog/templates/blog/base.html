@@ -16,7 +16,7 @@
         <div class="header">
             <div class="login_info">
             {% if request.user.is_authenticated %}
-            Добро пожаловать, {{ user.username }}<a href="{% url 'logout' %}">   Выйти</a>
+            Добро пожаловать, {{ user.username }}<a href="{% url 'logout' %}"> Выйти</a>
             {% else %}
             <a href="{% url 'login' %}"> Войти </a><a href="{% url 'register' %}"> Регистрация </a>
             {% endif %}
@@ -38,8 +38,9 @@
                      <li>Архив</li>
                 </ul>
             </div>
-            <div class="cont">{% block content %} {% endblock %}</div>
-    </div>
+          <div class="cont">{% block content %} {% endblock %}</div>
+        </div>
+     </div>
 
 </body>
 </html>

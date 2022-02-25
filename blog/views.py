@@ -10,10 +10,10 @@ from blog.forms import AddCommentForm, SearchForm
 
 def control_empty(get_queryset):
         def wrapper(self):
-            object = get_queryset(self)
-            if len(object) == 0:
+            obj = get_queryset(self)
+            if len(obj) == 0:
                 raise Http404
-            return object
+            return obj
         return wrapper
 
 
@@ -53,9 +53,9 @@ class ShowPost(FormMixin, DetailView):
         return context
 
     def get_success_url(self):
-        return reverse_lazy('post', kwargs = {'category_slug':self.object.category.slug, 'post_slug':self.object.slug})
+        return reverse_lazy('blog:post', kwargs = {'category_slug':self.object.category.slug, 'post_slug':self.object.slug})
 
-    def post(self, request):
+    def post(self, request, *args, **kwargs):
         self.object = self.get_object()
         form = self.get_form()
         like = request.POST.get('like', None)
@@ -88,7 +88,7 @@ class PostListData(FormMixin):
     model = Post
     context_object_name = 'posts'
     template_name = 'blog/index.html'
-    paginate_by = 5
+    paginate_by = 2
     form_class = SearchForm
 
     def get_success_url(self):
@@ -107,7 +107,7 @@ class PostListView(PostListData, ListView):
                                    ).defer('text', 'is_published', 'author__avatar', 'author__date_joined',
                                            'author__is_active', 'author__is_staff', 'author__is_superuser',
                                            'author__password', 'author__username', 'author__email',
-                                           'author__last_login', 'image'
+                                           'author__last_login'
                                     ).annotate(comments_count=Count('comments'))
 
 
