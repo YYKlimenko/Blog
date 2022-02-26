@@ -33,31 +33,31 @@ img{
 }
 
 .page{
-        background: #e0d3d3;
-        display: flex;
-        flex-direction: column;
+    background: #e0d3d3;
+    display: flex;
+    flex-direction: column;
 }
 
 
 /* HEADER */
 .header{
-        padding-left: 10px;
-        padding-right: 10px;
-        line-height: 40px;
-        height: 40px;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        background: #c70000;
-        border-radius: 0px 0px 7px 7px;
-        font-weight: 550;
-        text-transform: uppercase;
+    padding-left: 10px;
+     padding-right: 10px;
+    line-height: 40px;
+    height: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background: #c70000;
+    border-radius: 0px 0px 7px 7px;
+    font-weight: 550;
+    text-transform: uppercase;
 }
 
 .login_info{
-
    color:#e0d3d3;
 }
+
 .login_info a{
     color:black;
 }
@@ -68,26 +68,24 @@ img{
 }
 
 .login_info a:hover{
-        color: #e0d3d3;
+    color: #e0d3d3;
 }
-.search-form{
 
-}
 .search-form button {
-  border: 0;
-  background: #c70000;
-  font-weight: 550;
-  text-transform: uppercase;
-}
-.search-form button:hover {
-  border: 0;
-  background: #c70000;
-  font-weight: 550;
-  font-family: Verdana, Helvetica, Arial, sans-serif;
-  text-transform: uppercase;
-  color: #e0d3d3;
+    border: 0;
+    background: #c70000;
+    font-weight: 550;
+    text-transform: uppercase;
 }
 
+.search-form button:hover {
+    border: 0;
+    background: #c70000;
+    font-weight: 550;
+    font-family: Verdana, Helvetica, Arial, sans-serif;
+    text-transform: uppercase;
+    color: #e0d3d3;
+}
 
 
 /* BODY */
@@ -101,12 +99,35 @@ img{
 }
 
 .sidebar{
-        flex-grow:1;
-        background: #f0f0f0;
-        border-radius: 7px 7px 7px 7px;
-        font-size: 120%;
-        padding-right:20px;
-        }
+    flex-grow:1;
+    min-width:150px;
+    max-width:150px;
+}
+
+.sidebar ul{
+    padding: 0px;
+}
+
+.sidebar li{
+    background: #f0f0f0;
+    margin-bottom: 2px;
+    padding-left:  5px;
+    height: 30px;
+    line-height: 30px;
+    font-size: 110%;
+    font-weight: 550;
+    margin-right: 10px;
+}
+
+.sidebar a{
+    color: black;
+    font-weight: 550;
+}
+
+.sidebar li:hover{
+    background: #c70000;
+    margin-right: 0px;
+}
 
 .cont{
     display: flex;
@@ -116,16 +137,16 @@ img{
 }
 
 .content{
-        align-items: flex-start;
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        border:0px solid black;
-        padding-top: 5px;
-        padding-right: 20px;
-        margin-bottom: 5px;
-
+    align-items: flex-start;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    border:0px solid black;
+    padding-top: 5px;
+    padding-right: 20px;
+    margin-bottom: 5px;
 }
+
 .block-titul img{
     display: flex;
     flex-direction: column;
@@ -150,7 +171,6 @@ img{
 .author{
     color: #e0d3d3;
 }
-
 
 .block-text{
     flex-grow:1;
@@ -185,32 +205,29 @@ img{
     text-decoration: underline;
 }
 
-
 .paginator{
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-
-
 }
 
-.paginator2{
+.current-page{
     font-size: 150%;
     background: #c70000;
     color: #e0d3d3;
     border: 0px solid black;
     padding: 10px;
     margin-right: 5px;
-
 }
 
-.paginator3{
+.other-pages{
     font-size: 150%;
     background: #f0f0f0;
     border: 0px solid black;
     padding: 10px;
     margin-right: 5px;
 }
+
 .paginator3 a{
     text-decoration: none;
 }
