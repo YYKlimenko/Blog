@@ -4,85 +4,94 @@
 {% block content %}
 <div class="content">
     <div class="block-titul">
-    <div class="block-titul-image">
-        <h1>{{post.title}}</h1>
-        {% if post.image %}
-        <img width="400" height="300" src="{{ post.image.url }}"> </img>
-        {% endif %}
-     </div>
-     <div class="block-titul-author">
-        <h3>Дата публикации: {{post.date_pub}}</h3>
-        <h3>Категория: <a href="{% url 'blog:category' post.category.slug %}"> {{post.category}}</a></h3>
-        <h3>Тэги: {% for tag in post.tags.all %}<a href="{% url 'blog:tag' tag.slug %}"> #{{ tag }}</a> {% endfor %}</h3>
-     </div>
-     </div>
+        <div class="block-titul-image">
+            <h1>{{post.title}}</h1>
+            {% if post.image %}
+            <img width="400" height="300" src="{{ post.image.url }}"> </img>
+            {% endif %}
+        </div>
+        <div class="block-titul-author">
+            <h3>Дата публикации: {{post.date_pub}}</h3>
+            <h3>Категория: <a href="{% url 'blog:category' post.category.slug %}"> {{post.category}}</a></h3>
+            <h3>Тэги: {% for tag in post.tags.all %}<a href="{% url 'blog:tag' tag.slug %}"> #{{ tag }}</a> {% endfor %}</h3>
+        </div>
+    </div>
+    <div class="block-text">
+        <div class="text">
+            <p>{{post.preview_text|linebreaks}}</p>
+            <p>{{post.text|linebreaks}}</p>
+            <p>Автор: {{post.author.first_name}} {{post.author.last_name}}</p>
+        </div>
+        <div class="comments">
+            <h2>Комментарии:</h2>
+            {% for comment in post.comments.all %}
+            <div class="comment">
+                <div class="user-avatar">
+                    <img width="100" height="100" src="{{comment.author.avatar.url}}"></img>
+                </div>
+                <div class="comment-body">
+                    {% if comment.author.first_name %}
+                    <div class="comment-author-name">{{comment.author.first_name}} {{comment.author.last_name}}</div>
+                    {% else %}
+                    <div class="comment-author-name">Гость</div>
+                    {% endif %}
+                    <div class="comment-datepub">{{ comment.date_pub }}</div>
+                    <div class="comment-text">{{ comment.text }}</div>
+                    <form action="{{post.get_absolute_url}}"  method="post">
+                    {% csrf_token %}
+                    <div class="comment-like"><button type="submit" name="like" value="{{comment.id}}"><span class="heart">♥</span></button>{{comment.likes_count}}</div>
+                    </form>
+                    <hr>
 
-    <p>{{post.preview_text|linebreaks}}</p>
-<p>{{post.text|linebreaks}}</p>
-<p>Автор: {{post.author.first_name}} {{post.author.last_name}}</p>
-<hr>
-
-<p>Комментарии:</p>{% for comment in comments %}
-
-
-    {% if comment.author.first_name %}
-    <p>Автор: {{comment.author.first_name}} {{comment.author.last_name}}</p>
-    {% else %}
-    <p>Автор: Гость</p>
-    {% endif %}
-    <img width="100" height="100" src="{{comment.author.avatar.url}}"></img>
-    <p>{{ comment.date_pub }}</p>
-    <p>{{ comment.text }}</p>
-    <h4>Лайки: {{comment.likes_count}}</h4>
-    <form action="{{post.get_absolute_url}}"  method="post">
-    {% csrf_token %}
-    <p> <button type="submit" name="like" value="{{comment.id}}">Лайк/Дизлайк</button> </p>
-    </form>
-    <hr>
-
-        {% for child_comment in comment.children.all %}
-
-        {% if child_comment.author.first_name %}
-
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;Автор: {{child_comment.author.first_name}} {{child_comment.author.last_name}}</p>
-        {% else %}
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;Автор: Гость</p>
-        {% endif %}
-        <img width="100" height="100" src="{{child_comment.author.avatar.url}}"></img>
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;{{ child_comment.date_pub }}</p>
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;{{ child_comment.text }}</p>
-        <h4>&nbsp;&nbsp;&nbsp;&nbsp;Лайки: {{child_comment.likes_count}}</h4>
-        <form action="{{post.get_absolute_url}}"  method="post">
-        {% csrf_token %}
-        <p> <button type="submit" name="like" value="{{child_comment.id}}">Лайк/Дизлайк</button> </p>
-        </form>
-        {% endfor %}
-        <p>Добавить комментарий:</p>
-        <form action="" method="post">
-        {{ form.text }}
-        <div> {{ form.text.errors }} </div>
-        {% csrf_token %}
-        <p> <button type="submit" name="parent" value="{{comment.pk}}">Добавить</button> </p>
-        </form>
+                    {% for child_comment in comment.children.all %}
+                    <div class="comment">
+                        <div class="user-avatar">
+                            <img width="100" height="100" src="{{child_comment.author.avatar.url}}"></img>
+                        </div>
+                        <div class="comment-body">
+                            {% if child_comment.author.first_name %}
+                            <div class="comment-author-name">{{child_comment.author.first_name}} {{comment.author.last_name}}</div>
+                            {% else %}
+                            <div class="comment-author-name">Гость</div>
+                            {% endif %}
+                            <div class="comment-datepub">{{ child_comment.date_pub }}</div>
+                            <div class="comment-text">{{ child_comment.text }}</div>
+                            <form action="{{post.get_absolute_url}}"  method="post">
+                                {% csrf_token %}
+                                <div class="comment-like"><button type="submit" name="like" value="{{child_comment.id}}"><span class="heart">♥</span></button>{{child_comment.likes_count}}</div>
+                            </form>
+                            <hr>
+                        </div>
 
 
-{% endfor %}
-<hr>
-<p>Добавить комментарий:</p>
-<form action="" id="add_comment" method="post">
-    {{ form.text }}
-    <div> {{ form.text.errors }} </div>
-    {% csrf_token %}
-<p> <button type="submit" name="parent" value="None">Добавить</button> </p>
-    <hr>
-<h4>Лайки: {{post.likes.count}}</h4>
-</form>
-<form action="{{post.get_absolute_url}}"  method="post">
-     {% csrf_token %}
-<p> <button type="submit" name="like" value="post">Лайк/Дизлайк</button> </p>
-</form>
-</div>
-{% endblock %}
+                    </div>
+                    {% endfor %}
+                    <div class="add-comment">
+                            <p>Добавить комментарий:</p>
+                            <form action="" method="post">
+                                {{ form.text }}
+                                <div> {{ form.text.errors }} </div>
+                                {% csrf_token %}
+                                <p> <button type="submit" name="parent" value="{{comment.pk}}">Добавить</button> </p>
+                            </form>
+                    </div>
+
+
+                </div>
+            </div>
+            {% endfor %}
+            <div class="add-comment">
+                <p>Добавить комментарий:</p>
+                <form action="" method="post">
+                {{ form.text }}
+                <div> {{ form.text.errors }} </div>
+                {% csrf_token %}
+                <p> <button type="submit" name="parent" value="">Добавить</button> </p>
+                </form>
+            </div>
+        </div>
+        {% endblock %}
+
 
 
 

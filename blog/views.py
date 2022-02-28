@@ -1,21 +1,12 @@
-from django.http import HttpResponseNotFound, Http404
+from django.http import HttpResponseNotFound
 from django.urls import reverse_lazy
 from django.db.models import Count, Q
 from django.db.models.query import Prefetch
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import FormMixin
-from blog.models import Post, Tag, Comment
-from blog.forms import AddCommentForm, SearchForm
-
-
-def control_empty(get_queryset):
-        def wrapper(self):
-            obj = get_queryset(self)
-            if len(obj) == 0:
-                raise Http404
-            return obj
-        return wrapper
-
+from .models import Post, Tag, Comment
+from .forms import AddCommentForm, SearchForm
+from .funcs import control_empty
 
 class ShowPost(FormMixin, DetailView):
     model = Post
@@ -25,35 +16,35 @@ class ShowPost(FormMixin, DetailView):
     form_class = AddCommentForm
 
     def get_queryset(self):
-        return Post.objects.filter(
-                                   slug=self.kwargs['post_slug']
-                                   ).select_related('author', 'category')
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
         defer_list = ['author__date_joined', 'author__is_active',
                       'author__is_staff', 'author__is_superuser',
                       'author__password', 'author__username',
                       'author__email','author__last_login']
 
-        comments = Comment.objects.filter(
-                                          parent__isnull = True
-                                          ).filter(post_id = self.object.pk
-                                          ).annotate(likes_count=Count('likes')
-                                          ).select_related('author'
-                                          ).prefetch_related(
-                                                             Prefetch(
-                                                             'children',
-                                                             Comment.objects.annotate(likes_count=Count('likes')
-                                                             ).select_related('author'
-                                                             ).defer(*defer_list))
-                                          ).order_by('-date_pub'
-                                          ).defer(*defer_list)
-        context['comments'] = comments
-        return context
+        return Post.objects.filter(
+                                   slug=self.kwargs['post_slug']
+                                   ).select_related('author', 'category'
+                                   ).prefetch_related(
+                                                     Prefetch(
+                                                             'comments',
+                                                             Comment.objects.filter(
+                                                  parent__isnull = True
+                                                  ).annotate(likes_count=Count('likes')
+                                                  ).select_related('author'
+                                                  ).prefetch_related(
+                                                                     Prefetch(
+                                                                     'children',
+                                                                     Comment.objects.annotate(likes_count=Count('likes')
+                                                                     ).select_related('author'
+                                                                     ).defer(*defer_list))
+                                                  ).order_by('-date_pub'
+                                                  ).defer(*defer_list)
+                                                  ))
 
     def get_success_url(self):
-        return reverse_lazy('blog:post', kwargs = {'category_slug':self.object.category.slug, 'post_slug':self.object.slug})
+        return reverse_lazy(
+                           'blog:post',
+                           kwargs = {'category_slug':self.object.category.slug, 'post_slug':self.object.slug})
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -88,7 +79,7 @@ class PostListData(FormMixin):
     model = Post
     context_object_name = 'posts'
     template_name = 'blog/index.html'
-    paginate_by = 2
+    paginate_by = 5
     form_class = SearchForm
 
     def get_success_url(self):

@@ -5,10 +5,8 @@
     <meta charset="UTF-8">
     <meta name="author" content="Yuri Klimenko">
     <meta name="robots" content="index">
-
     <title> {% block title %} {% endblock title %}  </title>
     {% block css %} {% endblock css %}
-
 </head>
 <body>
     <div class="page">
@@ -22,7 +20,7 @@
             </div>
             <div class="search-form">
                 <form method="post" action="{% url 'blog:search' %}">
-                {{ form.text }}
+                <input type="text" name="text">
                 {% csrf_token %}
                 <button type="submit">Поиск</button>
                 </form>
