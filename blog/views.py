@@ -7,6 +7,7 @@ from django.views.generic.edit import FormMixin
 from .models import Post, Tag, Comment
 from .forms import AddCommentForm, SearchForm
 from .funcs import control_empty
+from .services import get_post, get_all_posts, get_searched_posts, get_posts_with_tag
 
 class ShowPost(FormMixin, DetailView):
     model = Post
@@ -16,30 +17,7 @@ class ShowPost(FormMixin, DetailView):
     form_class = AddCommentForm
 
     def get_queryset(self):
-        defer_list = ['author__date_joined', 'author__is_active',
-                      'author__is_staff', 'author__is_superuser',
-                      'author__password', 'author__username',
-                      'author__email','author__last_login']
-
-        return Post.objects.filter(
-                                   slug=self.kwargs['post_slug']
-                                   ).select_related('author', 'category'
-                                   ).prefetch_related(
-                                                     Prefetch(
-                                                             'comments',
-                                                             Comment.objects.filter(
-                                                  parent__isnull = True
-                                                  ).annotate(likes_count=Count('likes')
-                                                  ).select_related('author'
-                                                  ).prefetch_related(
-                                                                     Prefetch(
-                                                                     'children',
-                                                                     Comment.objects.annotate(likes_count=Count('likes')
-                                                                     ).select_related('author'
-                                                                     ).defer(*defer_list))
-                                                  ).order_by('-date_pub'
-                                                  ).defer(*defer_list)
-                                                  ))
+        return get_post(slug=self.kwargs['post_slug'])
 
     def get_success_url(self):
         return reverse_lazy(
@@ -49,7 +27,7 @@ class ShowPost(FormMixin, DetailView):
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
         form = self.get_form()
-        like = request.POST.get('like', None)
+        like = request.POST.get('like')
         if like:
             if like == 'post':
                 if Post.likes.through.objects.filter(user_id=request.user.id, post_id=self.object.pk):
@@ -88,73 +66,31 @@ class PostListData(FormMixin):
 
 class PostListView(PostListData, ListView):
 
-    @control_empty
+
     def get_queryset(self):
-        return Post.objects.filter(
-                                   is_published = True
-                                   ).prefetch_related('tags'
-                                   ).select_related('category', 'author'
-                                   ).order_by('-date_pub'
-                                   ).defer('text', 'is_published', 'author__avatar', 'author__date_joined',
-                                           'author__is_active', 'author__is_staff', 'author__is_superuser',
-                                           'author__password', 'author__username', 'author__email',
-                                           'author__last_login'
-                                    ).annotate(comments_count=Count('comments'))
+        return get_all_posts(is_published = True)
 
 
 class PostCatListView(PostListData, ListView):
-    @control_empty
+
     def get_queryset(self):
-        return Post.objects.filter(
-                                   is_published = True,
-                                   category__slug=self.kwargs['category_slug']
-                                   ).annotate(comments_count=Count('comments')
-                                   ).prefetch_related('tags'
-                                   ).select_related('category', 'author'
-                                   ).order_by('-date_pub'
-                                   ).defer('text', 'is_published', 'author__avatar', 'author__date_joined',
-                                           'author__is_active', 'author__is_staff', 'author__is_superuser',
-                                           'author__password', 'author__username', 'author__email',
-                                           'author__last_login', 'image')
+        return get_all_posts(is_published = True,
+                             category__slug=self.kwargs['category_slug'])
 
 
 class PostTagListView(PostListView):
 
-    @control_empty
     def get_queryset(self):
-        tag = Tag.objects.get(slug=self.kwargs['tag_slug'])
-        return tag.posts.filter(
-                                is_published = True,
-                                ).prefetch_related('tags'
-                                ).select_related('category'
-                                ).annotate(comments_count=Count('comments')
-                                ).prefetch_related('tags'
-                                ).select_related('category', 'author'
-                                ).order_by('-date_pub'
-                                ).defer('text', 'is_published', 'author__avatar', 'author__date_joined',
-                                        'author__is_active', 'author__is_staff', 'author__is_superuser',
-                                        'author__password', 'author__username', 'author__email',
-                                        'author__last_login', 'image')
+        return get_posts_with_tag(self.kwargs['tag_slug'])
 
 
 class SearchPostListView(PostListData, ListView):
 
     def get_queryset(self):
-        return Post.objects.filter(
-                                   Q(is_published = True
-                                   )&Q(title__icontains=self.search)|
-                                   Q(preview_text__icontains=self.search)|
-                                   Q(text__icontains=self.search)
-                                   ).prefetch_related('tags'
-                                   ).select_related('category', 'author'
-                                   ).order_by('-date_pub'
-                                   ).defer('text', 'is_published', 'author__avatar', 'author__date_joined',
-                                           'author__is_active', 'author__is_staff', 'author__is_superuser',
-                                           'author__password', 'author__username', 'author__email',
-                                           'author__last_login', 'image'
-                                   ).annotate(comments_count=Count('comments'))
+        return get_searched_posts(self.search)
+
     def post(self, request):
-        self.search = request.POST.get('text', None)
+        self.search = request.POST.get('text')
         return self.get(self, request)
 
 
