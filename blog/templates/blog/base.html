@@ -19,7 +19,7 @@
             {% endif %}
             </div>
             <div class="search-form">
-                <form method="post" action="{% url 'blog:search' %}">
+                <form method="get" action="{% url 'blog:search' %}">
                 <input type="text" name="text">
                 {% csrf_token %}
                 <button type="submit">Поиск</button>

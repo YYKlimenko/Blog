@@ -22,14 +22,14 @@
             <p>{{post.text|linebreaks}}</p>
             <p>Автор: {{post.author.first_name}} {{post.author.last_name}}</p>
         </div>
-        <div class="comments">
+        <div class="comments" id="comments">
             <h2>Комментарии:</h2>
             {% for comment in post.comments.all %}
             <div class="comment">
                 <div class="user-avatar">
                     <img width="100" height="100" src="{{comment.author.avatar.url}}"></img>
                 </div>
-                <div class="comment-body">
+                <div class="comment-body" id="{{ comment.id }}">
                     {% if comment.author.first_name %}
                     <div class="comment-author-name">{{comment.author.first_name}} {{comment.author.last_name}}</div>
                     {% else %}
@@ -48,7 +48,7 @@
                         <div class="user-avatar">
                             <img width="100" height="100" src="{{child_comment.author.avatar.url}}"></img>
                         </div>
-                        <div class="comment-body">
+                        <div class="comment-body" id="{{ child_comment.pk }}">
                             {% if child_comment.author.first_name %}
                             <div class="comment-author-name">{{child_comment.author.first_name}} {{comment.author.last_name}}</div>
                             {% else %}
@@ -69,8 +69,7 @@
                     <div class="add-comment">
                             <p>Добавить комментарий:</p>
                             <form action="" method="post">
-                                {{ form.text }}
-                                <div> {{ form.text.errors }} </div>
+                                <textarea type="text" name="text"></textarea>
                                 {% csrf_token %}
                                 <p> <button type="submit" name="parent" value="{{comment.pk}}">Добавить</button> </p>
                             </form>
@@ -83,10 +82,9 @@
             <div class="add-comment">
                 <p>Добавить комментарий:</p>
                 <form action="" method="post">
-                {{ form.text }}
-                <div> {{ form.text.errors }} </div>
+                <textarea type="text" name="text"></textarea>
                 {% csrf_token %}
-                <p> <button type="submit" name="parent" value="">Добавить</button> </p>
+                <p> <button type="submit" value="">Добавить</button> </p>
                 </form>
             </div>
         </div>

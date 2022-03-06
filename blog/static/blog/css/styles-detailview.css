@@ -33,6 +33,7 @@ textarea {
     width: 400px;
     border: 0.5px solid black;
     resize: none;
+    font-size: 12px;
 }
 
 .page{
@@ -266,6 +267,9 @@ textarea {
 .comment-like button:hover{
     opacity: 100%;
 }
+
+
+
 
 .content h1{
     text-align: right;
