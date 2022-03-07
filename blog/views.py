@@ -2,9 +2,8 @@ from django.http import HttpResponseNotFound, HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.db.models.query import Prefetch
 from django.views.generic import ListView, DetailView
-from .models import Post, Comment
-from .services import (get_post, get_filtered_posts, get_searched_posts, get_taged_posts, get_category,
-                       get_tag, handle_like)
+from .models import Post, Comment, Category, Tag
+from . import services
 
 
 class ShowPost(DetailView):
@@ -14,7 +13,7 @@ class ShowPost(DetailView):
     slug_url_kwarg = 'post_slug'
 
     def get_queryset(self):
-        return get_post(slug=self.kwargs['post_slug'])
+        return services.get_post(slug=self.kwargs['post_slug'])
 
     def get_success_url(self):
         return reverse_lazy('blog:post',
@@ -28,7 +27,7 @@ class ShowPost(DetailView):
                 liked_object = self.object
             else:
                 Comment.objects.get(pk=request.POST.get('like'))
-            handle_like(liked_object, self.request.user.id)
+            services.handle_like(liked_object, self.request.user.id)
             anchor = request.POST.get('like')
 
         elif request.POST.get('text'):
@@ -48,7 +47,7 @@ class MainPostListView(ListView):
     template_name = 'blog/index.html'
     paginate_by = 5
     title = 'Главная страница'
-    queryset = get_filtered_posts(is_published = True)
+    queryset = services.get_filtered_posts(is_published = True)
 
 
     def get_context_data(self):
@@ -61,23 +60,23 @@ class PostCatListView(MainPostListView):
 
 
     def get_queryset(self):
-        self.title = get_category(slug=self.kwargs["category_slug"])
-        return get_filtered_posts(is_published = True,
+        self.title = Category.objects.get(slug=self.kwargs["category_slug"])
+        return services.get_filtered_posts(is_published = True,
                                   category=self.title)
 
 
 class PostTagListView(MainPostListView):
 
     def get_queryset(self):
-        self.title = get_tag(slug=self.kwargs['tag_slug'])
-        return get_taged_posts(self.title)
+        self.title = Tag.objects.get(slug=self.kwargs['tag_slug'])
+        return services.get_taged_posts(self.title)
 
 
 class SearchPostListView(MainPostListView):
     title = 'Поиск'
 
     def get_queryset(self):
-        return get_searched_posts(self.search)
+        return services.get_searched_posts(self.search)
 
     def get(self, request):
         self.search = request.GET.get('text')

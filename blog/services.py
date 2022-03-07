@@ -1,6 +1,6 @@
 from django.db.models import Count
 from django.db.models.query import Prefetch, Q
-from .models import Post, Comment, Tag, Category
+from .models import Post, Comment, Tag
 
 
 """ Бизнес-логика """
@@ -58,15 +58,6 @@ def get_searched_posts(search_text):
 
 def get_taged_posts(tag):
     return _get_posts(tag.posts.filter(is_published = True))
-
-
-def get_category(slug):
-    return Category.objects.get(slug=slug)
-
-
-def get_tag(slug):
-    tag = Tag.objects.get(slug=slug)
-    return tag
 
 
 def handle_like(liked_object, user_id):

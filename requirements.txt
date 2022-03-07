@@ -1,0 +1,8 @@
+asgiref==3.4.1
+backports.zoneinfo==0.2.1
+Django==4.0.1
+django-debug-toolbar==3.2.4
+django-js-asset==1.2.2
+Pillow==9.0.1
+sqlparse==0.4.2
+tzdata==2021.5
