@@ -1,6 +1,6 @@
-from django.http import HttpResponseNotFound, HttpResponseRedirect
+from django.shortcuts import get_object_or_404
+from django.http import HttpResponseNotFound, HttpResponseRedirect, Http404
 from django.urls import reverse_lazy
-from django.db.models.query import Prefetch
 from django.views.generic import ListView, DetailView
 from .models import Post, Comment, Category, Tag
 from . import services
@@ -16,17 +16,17 @@ class ShowPost(DetailView):
         return services.get_post(slug=self.kwargs['post_slug'])
 
     def get_success_url(self):
+        post = self.get_object()
         return reverse_lazy('blog:post',
-                            kwargs = {'category_slug':self.object.category.slug, 'post_slug':self.object.slug})
+                            kwargs={'category_slug': post.category.slug, 'post_slug': post.slug})
 
     def post(self, request, *args, **kwargs):
-        self.object = self.get_object()
 
         if request.POST.get('like'):
             if request.POST.get('like') == 'post':
-                liked_object = self.object
+                liked_object = self.get_object()
             else:
-                Comment.objects.get(pk=request.POST.get('like'))
+                liked_object = Comment.objects.get(pk=request.POST.get('like'))
             services.handle_like(liked_object, self.request.user.id)
             anchor = request.POST.get('like')
 
@@ -37,6 +37,8 @@ class ShowPost(DetailView):
                                    post_id=self.object.pk,
                                    author_id=self.request.user.id,
                                    parent_id=parent_id)
+        else:
+            raise Http404
 
         return HttpResponseRedirect(f'{self.get_success_url()}#{anchor}')
 
@@ -47,8 +49,8 @@ class MainPostListView(ListView):
     template_name = 'blog/index.html'
     paginate_by = 5
     title = 'Главная страница'
-    queryset = services.get_filtered_posts(is_published = True)
-
+    allow_empty = True
+    queryset = services.get_filtered_posts(is_published=True)
 
     def get_context_data(self):
         context = super().get_context_data()
@@ -58,18 +60,17 @@ class MainPostListView(ListView):
 
 class PostCatListView(MainPostListView):
 
-
     def get_queryset(self):
-        self.title = Category.objects.get(slug=self.kwargs["category_slug"])
-        return services.get_filtered_posts(is_published = True,
-                                  category=self.title)
+        self.title = get_object_or_404(Category, slug=self.kwargs["category_slug"])
+        return services.get_filtered_posts(is_published=True,
+                                           category=self.title)
 
 
 class PostTagListView(MainPostListView):
 
     def get_queryset(self):
         self.title = Tag.objects.get(slug=self.kwargs['tag_slug'])
-        return services.get_taged_posts(self.title)
+        return services.get_tagged_posts(self.title)
 
 
 class SearchPostListView(MainPostListView):

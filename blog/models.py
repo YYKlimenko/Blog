@@ -4,8 +4,8 @@ from user.models import User
 
 
 class Category(models.Model):
-    name = models.CharField(max_length = 50, verbose_name='Наименование')
-    slug = models.SlugField(max_length = 50)
+    name = models.CharField(max_length=50, verbose_name='Наименование')
+    slug = models.SlugField(max_length=50)
 
     def __str__(self):
         return self.name
@@ -14,9 +14,10 @@ class Category(models.Model):
         verbose_name = 'Категория'
         verbose_name_plural = 'Категории'
 
+
 class Tag(models.Model):
-    name = models.CharField(max_length = 50, verbose_name='Тэг')
-    slug = models.SlugField(max_length = 50)
+    name = models.CharField(max_length=50, verbose_name='Тэг')
+    slug = models.SlugField(max_length=50)
 
     def __str__(self):
         return f'#{self.name}'
@@ -25,16 +26,17 @@ class Tag(models.Model):
         verbose_name = 'Тэг'
         verbose_name_plural = 'Тэги'
 
+
 class Comment(models.Model):
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    text = models.TextField(max_length = 300, verbose_name='Комментарий')
+    text = models.TextField(max_length=300, verbose_name='Комментарий')
     date_pub = models.DateTimeField(auto_now_add=True, verbose_name='Дата публикации')
     post = models.ForeignKey('Post',
                              on_delete=models.CASCADE,
                              verbose_name='Комментируемое сообщение',
-                             related_name = 'comments')
+                             related_name='comments')
     parent = models.ForeignKey('Comment', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
-    likes = models.ManyToManyField(User, blank = True, related_name='comments', verbose_name = 'Лайки')
+    likes = models.ManyToManyField(User, blank=True, related_name='comments', verbose_name='Лайки')
 
     def __str__(self):
         return f'{str(self.text)}'
@@ -47,17 +49,16 @@ class Comment(models.Model):
 
 class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.SET('Неизвестный автор'))
-    title = models.CharField(max_length = 100, unique = True, verbose_name='Заголовок')
-    slug = models.SlugField(max_length = 100, unique = True)
+    title = models.CharField(max_length=100, unique=True, verbose_name='Заголовок')
+    slug = models.SlugField(max_length=100, unique=True)
     image = models.ImageField(upload_to='images/%Y/%m/%d/', null=True, blank=True, verbose_name='Изображение')
     category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='Категория')
-    tags = models.ManyToManyField('Tag', blank = True, related_name='posts', verbose_name = 'Теги',)
-    preview_text = models.TextField(max_length = 500, verbose_name='Превью')
-    text = models.TextField(max_length = 5000, verbose_name='Текст')
+    tags = models.ManyToManyField('Tag', blank=True, related_name='posts', verbose_name='Теги', )
+    preview_text = models.TextField(max_length=500, verbose_name='Превью')
+    text = models.TextField(max_length=5000, verbose_name='Текст')
     date_pub = models.DateTimeField(auto_now_add=True, verbose_name='Дата публикации')
-    likes = models.ManyToManyField(User, blank = True, related_name='posts', verbose_name = 'Лайки')
+    likes = models.ManyToManyField(User, blank=True, related_name='posts', verbose_name='Лайки')
     is_published = models.BooleanField("Опубликовано", null=True, blank=True)
-
 
     def __str__(self):
         return self.title
@@ -69,6 +70,3 @@ class Post(models.Model):
         verbose_name = 'Пост'
         verbose_name_plural = 'Посты'
         ordering = ('-date_pub',)
-
-
-
