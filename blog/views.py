@@ -13,7 +13,7 @@ class ShowPost(DetailView):
     slug_url_kwarg = 'post_slug'
 
     def get_queryset(self):
-        return services.get_post(slug=self.kwargs['post_slug'])
+        return services.get_post(self.kwargs['post_slug'])
 
     def get_success_url(self):
         post = self.get_object()
@@ -49,7 +49,6 @@ class MainPostListView(ListView):
     template_name = 'blog/index.html'
     paginate_by = 5
     title = 'Главная страница'
-    allow_empty = True
     queryset = services.get_filtered_posts(is_published=True)
 
     def get_context_data(self):
@@ -69,7 +68,7 @@ class PostCatListView(MainPostListView):
 class PostTagListView(MainPostListView):
 
     def get_queryset(self):
-        self.title = Tag.objects.get(slug=self.kwargs['tag_slug'])
+        self.title = get_object_or_404(Tag, slug=self.kwargs["tag_slug"])
         return services.get_tagged_posts(self.title)
 
 
