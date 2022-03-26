@@ -11,24 +11,29 @@ def get_post(slug):
                    'author__is_staff', 'author__is_superuser',
                    'author__password', 'author__username',
                    'author__email', 'author__last_login')
-
-    return Post.objects.filter(
-        slug=slug
-        ).select_related(
-        'author', 'category'
-        ).prefetch_related(
-            Prefetch(
-                'comments',
-                Comment.objects.filter(
-                    parent__isnull=True
-                    ).annotate(likes_count=Count('likes'))
-                     .select_related('author')
-                     .prefetch_related(
-                        Prefetch(
-                            'children',
-                            Comment.objects.annotate(likes_count=Count('likes'))
-                                           .select_related('author').defer(*_defer_list)))
-                     .order_by('-date_pub').defer(*_defer_list)))
+    try:
+        return Post.objects.filter(
+            slug=slug
+            ).select_related(
+            'author', 'category'
+            ).prefetch_related(
+                Prefetch(
+                    'comments',
+                    Comment.objects.filter(
+                        parent__isnull=True
+                        ).annotate(likes_count=Count('likes'))
+                         .select_related('author')
+                         .prefetch_related(
+                            Prefetch(
+                                'children',
+                                Comment.objects.annotate(likes_count=Count('likes'))
+                                               .select_related('author').defer(*_defer_list)))
+                         .order_by('-date_pub').defer(*_defer_list))
+            ).annotate(
+            likes_count=Count('likes')
+            ).get()
+    except Post.DoesNotExist:
+        return None
 
 
 def _get_posts(posts):

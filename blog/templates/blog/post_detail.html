@@ -21,6 +21,11 @@
             <p>{{post.preview_text|linebreaks}}</p>
             <p>{{post.text|linebreaks}}</p>
             <p>Автор: {{post.author.first_name}} {{post.author.last_name}}</p>
+            <form action="{{post.get_absolute_url}}"  method="post">
+                    {% csrf_token %}
+                    <div class="comment-like"><button type="submit" name="like" value="post"><span class="heart">♥</span></button>{{post.likes_count}}</div>
+                    </form>
+
         </div>
         <div class="comments" id="comments">
             <h2>Комментарии:</h2>

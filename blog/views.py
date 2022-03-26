@@ -7,24 +7,27 @@ from . import services
 
 
 class ShowPost(DetailView):
-    model = Post
     template_name = 'blog/post_detail.html'
     context_object_name = 'post'
     slug_url_kwarg = 'post_slug'
 
-    def get_queryset(self):
-        return services.get_post(self.kwargs['post_slug'])
+    def get_object(self):
+        post = services.get_post(self.kwargs['post_slug'])
+        if post:
+            return post
+        else:
+            raise Http404
 
     def get_success_url(self):
-        post = self.get_object()
         return reverse_lazy('blog:post',
-                            kwargs={'category_slug': post.category.slug, 'post_slug': post.slug})
+                            kwargs={'category_slug': self.post.category.slug, 'post_slug': self.post.slug})
 
     def post(self, request, *args, **kwargs):
+        self.post = self.get_object()
 
         if request.POST.get('like'):
             if request.POST.get('like') == 'post':
-                liked_object = self.get_object()
+                liked_object = self.post
             else:
                 liked_object = Comment.objects.get(pk=request.POST.get('like'))
             services.handle_like(liked_object, self.request.user.id)
@@ -34,7 +37,7 @@ class ShowPost(DetailView):
             parent_id = request.POST.get('parent')
             anchor = parent_id if parent_id else 'comments'
             Comment.objects.create(text=request.POST.get('text'),
-                                   post_id=self.object.pk,
+                                   post_id=self.post.pk,
                                    author_id=self.request.user.id,
                                    parent_id=parent_id)
         else:
