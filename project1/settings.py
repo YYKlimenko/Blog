@@ -78,6 +78,25 @@ TEMPLATES = [
     },
 ]
 
+LOGGING = {
+   'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'WARNING',
+            'class': 'logging.FileHandler',
+            'filename':  os.path.join(BASE_DIR, 'logger/logger.log')
+        },
+    },
+    'loggers': {
+        'blog': {
+            'handlers': ['file'],
+            'level': 'WARNING',
+            'propagate': True
+        },
+    },
+}
+
 WSGI_APPLICATION = 'project1.wsgi.application'
 
 

@@ -1,0 +1,13 @@
+1
+division by zero
+Traceback (most recent call last):
+  File "D:\Python\Django\Blog\blog\views.py", line 27, in dispatch
+    response = super().dispatch(request, *args, **kwargs)
+  File "D:\Python\Django\Blog\venv\lib\site-packages\django\views\generic\base.py", line 101, in dispatch
+    return handler(request, *args, **kwargs)
+  File "D:\Python\Django\Blog\venv\lib\site-packages\django\views\generic\detail.py", line 106, in get
+    self.object = self.get_object()
+  File "D:\Python\Django\Blog\blog\views.py", line 41, in get_object
+    a = 1/0
+ZeroDivisionError: division by zero
+

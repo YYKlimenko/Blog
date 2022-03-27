@@ -1,12 +1,38 @@
+import traceback
+import logging
 from django.shortcuts import get_object_or_404
-from django.http import HttpResponseNotFound, HttpResponseRedirect, Http404
+from django.http import HttpResponseNotFound, HttpResponseRedirect, Http404, JsonResponse
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView
+from django.views.generic import View, ListView, DetailView
 from .models import Post, Comment, Category, Tag
 from . import services
 
 
-class ShowPost(DetailView):
+logger = logging.getLogger(__name__)
+
+
+class ErrorHandlerView(View):
+    """" Базовый класс для обработки всех исключений,
+         неотловленных на более низких уровнях """
+
+    @staticmethod
+    def get_response(data, *, status=200):
+        return JsonResponse(
+            data,
+            status=status,
+        )
+
+    def dispatch(self, request, *args, **kwargs):
+        try:
+            response = super().dispatch(request, *args, **kwargs)
+        except Exception as Error:
+            logger.warning(f'{str(Error)}\n{traceback.format_exc()}')
+            return ErrorHandlerView.get_response({'error_message': str(Error), 'traceback': traceback.format_exc()},
+                                                 status=400)
+        return response
+
+
+class ShowPost(DetailView, ErrorHandlerView):
     template_name = 'blog/post_detail.html'
     context_object_name = 'post'
     slug_url_kwarg = 'post_slug'
@@ -46,7 +72,7 @@ class ShowPost(DetailView):
         return HttpResponseRedirect(f'{self.get_success_url()}#{anchor}')
 
 
-class MainPostListView(ListView):
+class MainPostListView(ListView, ErrorHandlerView):
     model = Post
     context_object_name = 'posts'
     template_name = 'blog/index.html'
