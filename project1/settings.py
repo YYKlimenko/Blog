@@ -81,20 +81,29 @@ TEMPLATES = [
 LOGGING = {
    'version': 1,
     'disable_existing_loggers': False,
+
+    'formatters': {
+        'file': {
+            "format": "[{asctime} {module} {levelname}] {message}",
+            "style": "{",
+        }
+    },
     'handlers': {
         'file': {
             'level': 'WARNING',
             'class': 'logging.FileHandler',
-            'filename':  os.path.join(BASE_DIR, 'logger/logger.log')
-        },
+            'filename':  os.path.join(BASE_DIR, 'logger/logger.log'),
+            'formatter': 'file'
+        }
     },
     'loggers': {
         'blog': {
             'handlers': ['file'],
             'level': 'WARNING',
             'propagate': True
-        },
-    },
+        }
+
+    }
 }
 
 WSGI_APPLICATION = 'project1.wsgi.application'

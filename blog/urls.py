@@ -10,3 +10,4 @@ urlpatterns = [
     path('<slug:category_slug>/<slug:post_slug>', ShowPost.as_view(), name='post'),
 ]
 
+

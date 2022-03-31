@@ -1,7 +1,7 @@
 import traceback
 import logging
 from django.shortcuts import get_object_or_404
-from django.http import HttpResponseNotFound, HttpResponseRedirect, Http404, JsonResponse
+from django.http import HttpResponseNotFound, HttpResponseRedirect, Http404, JsonResponse, HttpResponse
 from django.urls import reverse_lazy
 from django.views.generic import View, ListView, DetailView
 from .models import Post, Comment, Category, Tag
@@ -11,28 +11,7 @@ from . import services
 logger = logging.getLogger(__name__)
 
 
-class ErrorHandlerView(View):
-    """" Базовый класс для обработки всех исключений,
-         неотловленных на более низких уровнях """
-
-    @staticmethod
-    def get_response(data, *, status=200):
-        return JsonResponse(
-            data,
-            status=status,
-        )
-
-    def dispatch(self, request, *args, **kwargs):
-        try:
-            response = super().dispatch(request, *args, **kwargs)
-        except Exception as Error:
-            logger.warning(f'{str(Error)}\n{traceback.format_exc()}')
-            return ErrorHandlerView.get_response({'error_message': str(Error), 'traceback': traceback.format_exc()},
-                                                 status=400)
-        return response
-
-
-class ShowPost(DetailView, ErrorHandlerView):
+class ShowPost(DetailView):
     template_name = 'blog/post_detail.html'
     context_object_name = 'post'
     slug_url_kwarg = 'post_slug'
@@ -42,7 +21,7 @@ class ShowPost(DetailView, ErrorHandlerView):
         if post:
             return post
         else:
-            raise Http404
+            raise Http404('Article is not exists')
 
     def get_success_url(self):
         return reverse_lazy('blog:post',
@@ -72,7 +51,7 @@ class ShowPost(DetailView, ErrorHandlerView):
         return HttpResponseRedirect(f'{self.get_success_url()}#{anchor}')
 
 
-class MainPostListView(ListView, ErrorHandlerView):
+class MainPostListView(ListView):
     model = Post
     context_object_name = 'posts'
     template_name = 'blog/index.html'
@@ -112,8 +91,14 @@ class SearchPostListView(MainPostListView):
         return super().get(self, request)
 
 
-def page_not_found(request, exception):
-    return HttpResponseNotFound('Страница не найдена')
+def handle_error(request, exception=None):
+    logger.error(f'\n{traceback.format_exc()}')
+    if type(exception) == Http404:
+        return HttpResponseNotFound('Ошибка 404. Страница не найдена')
+    else:
+        return HttpResponseNotFound('Ошибка 500. Чей-то код ужасен.')
+
+
 
 
 
