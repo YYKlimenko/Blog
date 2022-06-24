@@ -22,5 +22,3 @@ admin.site.register(Category)
 admin.site.register(Comment, CommentAdmin)
 admin.site.register(Tag)
 admin.site.register(User)
-
-# Register your models here.

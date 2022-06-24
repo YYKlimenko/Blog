@@ -3,9 +3,6 @@ from django.db.models.query import Prefetch, Q
 from .models import Post, Comment
 
 
-""" Бизнес-логика """
-
-
 def get_post(slug):
     _defer_list = ('author__date_joined', 'author__is_active',
                    'author__is_staff', 'author__is_superuser',

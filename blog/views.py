@@ -1,9 +1,9 @@
 import traceback
 import logging
 from django.shortcuts import get_object_or_404
-from django.http import HttpResponseNotFound, HttpResponseRedirect, Http404, JsonResponse, HttpResponse
+from django.http import HttpResponseNotFound, HttpResponseRedirect, Http404
 from django.urls import reverse_lazy
-from django.views.generic import View, ListView, DetailView
+from django.views.generic import ListView, DetailView
 from .models import Post, Comment, Category, Tag
 from . import services
 
@@ -97,8 +97,3 @@ def handle_error(request, exception=None):
         return HttpResponseNotFound('Ошибка 404. Страница не найдена')
     else:
         return HttpResponseNotFound('Ошибка 500. Чей-то код ужасен.')
-
-
-
-
-

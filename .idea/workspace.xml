@@ -2,14 +2,37 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4348847e-42e0-4e08-94fe-3a70be935b8f" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bash.exe.stackdump" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/blog/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog/migrations/0001_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog/migrations/0002_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog/migrations/0003_alter_post_preview_text.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog/migrations/0004_alter_post_author.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog/migrations/0005_alter_comment_likes_alter_comment_post_and_more.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog/migrations/0006_alter_category_name_alter_category_slug_and_more.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog/migrations/0007_alter_post_is_published.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog/migrations/0008_alter_post_author.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog/services.py" beforeDir="false" afterPath="$PROJECT_DIR$/blog/services.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/blog/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/blog/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/blog/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/blog/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logger/logger.log" beforeDir="false" afterPath="$PROJECT_DIR$/logger/logger.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project1/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/project1/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project1/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/project1/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/images/2022/02/09/og_og_1497720821220780911.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/images/2022/02/12/100_1315.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/images/2022/02/13/DSC_0139.JPG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/images/2022/02/13/IMG_5917.JPG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/images/2022/02/18/DSC_0116.JPG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/images/2022/02/19/DSC_0140.JPG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/images/2022/02/23/2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/images/2022/02/26/3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/images/2022/02/28/6NtPwvZy33c.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/images/2022/03/26/full-moon-clouds-pink-sky-scenic-aesthetic-1920x1080-1653.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/migrations/0001_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -158,12 +181,12 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="DefaultHtmlFileTemplate" value="Html5" />
-    <property name="FullScreen" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="terminal" />
-  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;
+  }
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Django\project1\blog\static\blog\css" />
